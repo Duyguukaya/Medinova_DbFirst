@@ -1,0 +1,121 @@
+﻿
+<div class="container-fluid bg-primary my-5 py-5">
+    <div class="container py-5">
+        <div class="row gx-5">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="mb-4">
+                    <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Appointment</h5>
+                    <h1 class="display-4">Make An Appointment For Your Family</h1>
+                </div>
+                <p class="text-white mb-5">
+                    Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum.
+                    Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero
+                    eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit.
+                    Sea dolore sanctus sed et. Takimata takimata sanctus sed.
+                </p>
+                <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#!">Find Doctor</a>
+                <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">Read More</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-white text-center rounded p-5">
+                    <h1 class="mb-4">Randevu Oluştur</h1>
+                    <form method="post" action="/Default/MakeAppointment">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <label>Bölüm Seçiniz</label>
+                                @Html.DropDownList("DepartmentId", (List<SelectListItem>)ViewBag.departments, "---Bölüm Seçiniz---", new { @class = "form-control" })
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label>Doktor Seçiniz</label>
+                                <select id="DoctorId" name="DoctorId" class="form-control bg-light border-0" style="height: 55px;">
+                                    <option selected>---Önce Bölümü Seçiniz---</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="text" class="form-control bg-light border-0" name="FullName" placeholder="Adınız Soyadınız"
+                                       style="height: 55px;">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="email" class="form-control bg-light border-0" name="Email" placeholder="Email Adresiniz"
+                                       style="height: 55px;">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="text" class="form-control bg-light border-0" name="PhoneNumber" placeholder="Telefon Numaranız"
+                                       style="height: 55px;">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="date" id="date" data-target-input="nearest">
+                                    <input type="text" class="form-control bg-light border-0 datetimepicker-input"
+                                           placeholder="Date" data-target="#date" data-toggle="datetimepicker"
+                                           style="height: 55px;">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="time" id="time" data-target-input="nearest">
+                                    <input type="text" class="form-control bg-light border-0 datetimepicker-input"
+                                           placeholder="Time" data-target="#time" data-toggle="datetimepicker"
+                                           style="height: 55px;">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">
+                                    Randevu Oluştur
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log("Sayfa yüklendi, jQuery çalışıyor.");
+
+        // DepartmentId değiştiğinde
+        $("#DepartmentId").change(function () {
+
+            console.log("Bölüm değiştirildi (Change event).");
+
+            var selectedDepId = $(this).val();
+            var doctorDropdown = $("#DoctorId");
+
+            console.log("Seçilen Bölüm ID: " + selectedDepId);
+
+            // Eğer seçim boşsa temizle
+            if (!selectedDepId || selectedDepId == "0" || selectedDepId == "") {
+                doctorDropdown.empty();
+                doctorDropdown.append('<option value="">--- Doktor Seçiniz ---</option>');
+                return;
+            }
+
+            $.ajax({
+                url: '/Default/GetDoctorsByDepartmentId',
+                type: 'GET',
+                data: { departmentId: selectedDepId },
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Sunucudan veri geldi:", data);
+
+                    doctorDropdown.empty();
+                    doctorDropdown.append('<option value="">--- Doktor Seçiniz ---</option>');
+
+                    $.each(data, function (i, doctor) {
+                        doctorDropdown.append($('<option></option>').val(doctor.Value).html(doctor.Text));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Hata olursa konsola detaylı yaz
+                    console.error("HATA OLUŞTU:", error);
+                    console.log("Status:", status);
+                    alert("Doktorlar getirilemedi! Lütfen F12 Console ekranına bakınız.");
+                }
+            });
+        });
+    });
+</script>
