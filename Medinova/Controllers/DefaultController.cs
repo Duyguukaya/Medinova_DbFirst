@@ -1,13 +1,16 @@
-﻿using Medinova.Models;
+﻿using Medinova.Dtos;
+using Medinova.Enums;
+using Medinova.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Web.Mvc;
 
 namespace Medinova.Controllers
 {
     public class DefaultController : Controller
     {
-      MedinovaContext context = new MedinovaContext();
+        MedinovaContext context = new MedinovaContext();
         public ActionResult Index()
         {
             return View();
@@ -25,13 +28,30 @@ namespace Medinova.Controllers
                                    }).ToList();
 
 
+
+            var dateList = new List<SelectListItem>();
+
+            for (int i = 0; i < 7; i++)
+            {
+                var date = DateTime.Now.AddDays(i);
+
+                dateList.Add(new SelectListItem
+                {
+                    Text = date.ToString("dd.MMMM.dddd"),
+                    Value = date.ToString("yyyy-MM-dd")
+                });
+            }
+
+
+            ViewBag.dateList = dateList;
+
             return PartialView();
         }
 
         [HttpPost]
         public ActionResult MakeAppointment(Appointment appointment)
         {
-           
+
 
             context.Appointments.Add(appointment);
             context.SaveChanges();
@@ -48,7 +68,35 @@ namespace Medinova.Controllers
                     Value = doctor.DoctorId.ToString()
                 }).ToList();
 
-            return Json(doctors,JsonRequestBehavior.AllowGet);
+            return Json(doctors, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetAvailableHours(DateTime selectedDate,int doctorId)
+        {
+            var bookedTimes = context.Appointments.Where(x => x.Doctorld == doctorId && x.AppointmentDate == selectedDate).Select(x=>x.AppointmentTime).ToList();
+
+            var dtoList = new List<AppointmentAvailability>();
+
+            foreach(var hour in Times.AppointmentHours)
+            {
+                var dto = new AppointmentAvailability();
+
+                dto.Time = hour;
+
+                if (bookedTimes.Contains(hour))
+                {
+                    dto.IsBooked = true;
+                }
+                else
+                {
+                    dto.IsBooked = false;
+                }
+
+                dtoList.Add(dto);
+            }
+
+            return Json(dtoList, JsonRequestBehavior.AllowGet);
         }
 
     }
