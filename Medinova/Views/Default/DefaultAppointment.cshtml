@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label>Doktor Seçiniz</label>
-                                <select id="DoctorId" name="DoctorId" class="form-control bg-light border-0" style="height: 55px;">
+                                <select id="DoctorId" name="Doctorld" class="form-control bg-light border-0" style="height: 55px;">
                                     <option selected>---Önce Bölümü Seçiniz---</option>
                                 </select>
                             </div>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="date" id="date" data-target-input="nearest">
-                                   @Html.DropDownList("AppointmentDate",(List<SelectListItem>) ViewBag.dateList,"---Tarih Seçin---", new {@class = "form-control"})
+                                    @Html.DropDownList("AppointmentDate", (List<SelectListItem>)ViewBag.dateList, "---Tarih Seçin---", new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
@@ -70,28 +70,27 @@
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        console.log("Sayfa yüklendi, jQuery çalışıyor.");
 
-        // DepartmentId değiştiğinde
         $("#DepartmentId").change(function () {
 
-            console.log("Bölüm değiştirildi (Change event).");
-
             var selectedDepId = $(this).val();
+
             var doctorDropdown = $("#DoctorId");
 
-            console.log("Seçilen Bölüm ID: " + selectedDepId);
+            var timeDropdown = $("#AppointmentTime");
 
-            // Eğer seçim boşsa temizle
-            if (!selectedDepId || selectedDepId == "0" || selectedDepId == "") {
-                doctorDropdown.empty();
-                doctorDropdown.append('<option value="">--- Doktor Seçiniz ---</option>');
-                return;
-            }
+
+            $('#AppointmentDate').val('').trigger('change');
+
+            timeDropdown.empty();
+
+
+
+
+
 
             $.ajax({
                 url: '/Default/GetDoctorsByDepartmentId',
@@ -99,23 +98,17 @@
                 data: { departmentId: selectedDepId },
                 dataType: 'json',
                 success: function (data) {
-                    console.log("Sunucudan veri geldi:", data);
-
                     doctorDropdown.empty();
-                    doctorDropdown.append('<option value="">--- Doktor Seçiniz ---</option>');
+
 
                     $.each(data, function (i, doctor) {
-                        doctorDropdown.append($('<option></option>').val(doctor.Value).html(doctor.Text));
+
+                        doctorDropdown.append($('<option> </option>').val(doctor.Value).html(doctor.Text));
                     });
-                },
-                error: function (xhr, status, error) {
-                    // Hata olursa konsola detaylı yaz
-                    console.error("HATA OLUŞTU:", error);
-                    console.log("Status:", status);
-                    alert("Doktorlar getirilemedi! Lütfen F12 Console ekranına bakınız.");
                 }
-            });
-        });
+            })
+
+        })
 
         $("#AppointmentDate").change(function () {
 
@@ -125,6 +118,12 @@
 
             var timeDropdown = $("#AppointmentTime");
 
+
+
+            if (selectedDate === '' && selectedDoctorId === '') {
+                timeDropdown.append('<option>---Önce Doktoru ve Tarihi Seçin</option>');
+            }
+
             $.ajax({
                 url: '/Default/GetAvailableHours',
                 type: 'POST',
@@ -133,6 +132,7 @@
                 success: function (data) {
 
                     timeDropdown.empty();
+
 
 
                     $.each(data, function (i, item) {
@@ -152,14 +152,21 @@
                         }
 
                         timeDropdown.append(option);
-                        timeDropdown.prop("disabled", false);
+                        timeDropdown.prop('disabled', false);
+
                     });
+
                 }
             });
 
         });
 
+
     });
+
+
+
+
 </script>
 
 

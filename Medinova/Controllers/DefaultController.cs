@@ -72,32 +72,34 @@ namespace Medinova.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetAvailableHours(DateTime selectedDate,int doctorId)
+        public JsonResult GetAvailableHours(DateTime selectedDate, int doctorId)
         {
-            var bookedTimes = context.Appointments.Where(x => x.Doctorld == doctorId && x.AppointmentDate == selectedDate).Select(x=>x.AppointmentTime).ToList();
+
+            var dayStart = selectedDate.Date;
+            var dayEnd = dayStart.AddDays(1);
+
+            var bookedTimes = context.Appointments
+                .Where(x => x.Doctorld == doctorId
+                            && x.AppointmentDate >= dayStart
+                            && x.AppointmentDate < dayEnd)
+                .Select(x => x.AppointmentTime)
+                .ToList();
 
             var dtoList = new List<AppointmentAvailability>();
 
-            foreach(var hour in Times.AppointmentHours)
+            foreach (var hour in Times.AppointmentHours)
             {
                 var dto = new AppointmentAvailability();
-
                 dto.Time = hour;
 
-                if (bookedTimes.Contains(hour))
-                {
-                    dto.IsBooked = true;
-                }
-                else
-                {
-                    dto.IsBooked = false;
-                }
+                bool isBooked = bookedTimes.Any(dbTime => dbTime.Trim() == hour.Trim());
+
+                dto.IsBooked = isBooked;
 
                 dtoList.Add(dto);
             }
 
             return Json(dtoList, JsonRequestBehavior.AllowGet);
         }
-
     }
 }
