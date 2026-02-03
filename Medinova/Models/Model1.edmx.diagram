@@ -15,6 +15,9 @@
         <AssociationConnector Association="MedinovaDbModel.FK_Appointments_Doctors" />
         <AssociationConnector Association="MedinovaDbModel.FK_Doctors_Departments" />
         <EntityTypeShape EntityType="MedinovaDbModel.User" Width="1.5" PointX="7.75" PointY="4.625" />
+        <EntityTypeShape EntityType="MedinovaDbModel.Role" Width="1.5" PointX="5.5" PointY="6.875" />
+        <AssociationConnector Association="MedinovaDbModel.UserRoles" />
+        <EntityTypeShape EntityType="MedinovaDbModel.Testimonial" Width="1.5" PointX="0.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

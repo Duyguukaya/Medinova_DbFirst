@@ -133,8 +133,29 @@
     <Compile Include="Controllers\AdminAboutController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Dtos\AboutDtos\CreateAboutDto.cs" />
+    <Compile Include="Dtos\AboutDtos\ResultAboutDto.cs" />
+    <Compile Include="Dtos\AboutDtos\UpdateAboutDto.cs" />
+    <Compile Include="Dtos\AboutItemDtos\CreateAboutItemDto.cs" />
+    <Compile Include="Dtos\AboutItemDtos\ResultAboutItemDto.cs" />
+    <Compile Include="Dtos\AboutItemDtos\UpdateAboutItemDto.cs" />
     <Compile Include="Dtos\AppointmentAvailability.cs" />
+    <Compile Include="Dtos\AppointmentDtos\CreateAppointmentDto.cs" />
+    <Compile Include="Dtos\AppointmentDtos\ResultAppointmentDto.cs" />
+    <Compile Include="Dtos\AppointmentDtos\UpdateAppointmentDto.cs" />
+    <Compile Include="Dtos\BannerDtos\CreateBannerDto.cs" />
+    <Compile Include="Dtos\BannerDtos\ResultBannerDto.cs" />
+    <Compile Include="Dtos\BannerDtos\UpdateBannerDto.cs" />
+    <Compile Include="Dtos\DepartmentDtos\CreateDepartmentDto.cs" />
+    <Compile Include="Dtos\DepartmentDtos\ResultDepartmentDto.cs" />
+    <Compile Include="Dtos\DepartmentDtos\UpdateDepartmentDto.cs" />
+    <Compile Include="Dtos\DoctorDtos\CreateDoctorDto.cs" />
+    <Compile Include="Dtos\DoctorDtos\ResultDoctorDto.cs" />
+    <Compile Include="Dtos\DoctorDtos\UpdateDoctorDto.cs" />
     <Compile Include="Dtos\LoginDto.cs" />
+    <Compile Include="Dtos\TestimonialDtos\CreateTestimonialDto.cs" />
+    <Compile Include="Dtos\TestimonialDtos\ResultTestimonialDto.cs" />
+    <Compile Include="Dtos\TestimonialDtos\UpdateTestimonialDto.cs" />
     <Compile Include="Enums\Times.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -172,7 +193,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Testimonial.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
