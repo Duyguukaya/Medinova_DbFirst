@@ -4,27 +4,59 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width" />
-    <title>Giriş Sayfası</title>
+    <title>Medinova - Giriş Sayfası</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Sayfayı dikeyde ve yatayda ortalamak için küçük bir stil */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            border-radius: 15px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-    <div> 
-        <div class="container">
-            <h4>Giriş Sayfası</h4>
-            <form method="post">
-                <label>Kullanıcı Adı</label>
-                @Html.TextBoxFor(x=>x.UserName, new {@class ="form-control" })
-                <br />
-                <label>Şifre</label>
-               <input type="password" name="Password" class="form-control" />
-                <br />
-                <span class="text-danger">@Html.ValidationSummary()</span>
-                <button class="btn btn-primary">Giriş Yap</button>
-            </form>
+    <div class="container login-container">
+        <div class="col-md-5">
+            <div class="card shadow-lg p-4">
+                <div class="card-body">
+                    <h3 class="text-center text-primary mb-4">Medinova Giriş</h3>
+
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                    {
+                        <div class="form-group mb-3">
+                            <label class="form-label">Kullanıcı Adı</label>
+                            @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", placeholder = "Kullanıcı adınızı giriniz" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">Şifre</label>
+                            @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "******" })
+                        </div>
+
+                        <div class="text-danger mb-3">
+                            @Html.ValidationSummary(true) @* Sadece genel hataları gösterir *@
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-block w-100">Giriş Yap</button>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </body>
