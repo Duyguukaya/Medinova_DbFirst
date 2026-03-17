@@ -164,32 +164,31 @@ Giriş yapıldığında kullanıcının rolüne göre otomatik yönlendirme yap�
 
 ### Genel Web Sitesi
 
-<!-- Anasayfa görseli buraya eklenecek -->
-
-<!-- Randevu formu görseli buraya eklenecek -->
-
-<!-- Doktorlar carousel görseli buraya eklenecek -->
+<img width="1898" height="824" alt="Ekran görüntüsü 2026-03-17 172229" src="https://github.com/user-attachments/assets/c9041163-9b53-4060-9357-641d0d12a28c" />
+<img width="1896" height="824" alt="Ekran görüntüsü 2026-03-17 172241" src="https://github.com/user-attachments/assets/17f67457-4c94-4cea-b5bc-865f002c7603" />
+<img width="1895" height="824" alt="Ekran görüntüsü 2026-03-17 172257" src="https://github.com/user-attachments/assets/45a1b832-79dc-4af2-b0c9-3a3d89e3189d" />
+<img width="1896" height="825" alt="Ekran görüntüsü 2026-03-17 172308" src="https://github.com/user-attachments/assets/741fb2e4-fa0a-4213-87f9-12ab33e6533a" />
+<img width="1896" height="822" alt="Ekran görüntüsü 2026-03-17 172321" src="https://github.com/user-attachments/assets/79872db0-2dcf-4b7a-a58c-3111c6268fc1" />
+<img width="1897" height="827" alt="Ekran görüntüsü 2026-03-17 172402" src="https://github.com/user-attachments/assets/e33a8206-432a-4cb3-8aa5-3dd76ef039bd" />
+<img width="1897" height="824" alt="Ekran görüntüsü 2026-03-17 172414" src="https://github.com/user-attachments/assets/8f5ba9eb-3131-470d-94e6-6422a115824d" />
 
 ### Admin Paneli
 
-<!-- Dashboard görseli buraya eklenecek -->
-
-<!-- Doktor yönetimi görseli buraya eklenecek -->
-
-<!-- Randevu yönetimi görseli buraya eklenecek -->
+<img width="1898" height="822" alt="Ekran görüntüsü 2026-03-17 172441" src="https://github.com/user-attachments/assets/1b11cdf5-5044-4735-9de4-f9e3f9abb8c4" />
+<img width="1895" height="827" alt="Ekran görüntüsü 2026-03-17 172458" src="https://github.com/user-attachments/assets/b1217565-4c0f-438b-9ed6-a2ed8eb3d952" />
+<img width="1895" height="825" alt="Ekran görüntüsü 2026-03-17 172512" src="https://github.com/user-attachments/assets/876472c7-44b9-4e8c-a931-f39f291a020c" />
+<img width="1895" height="818" alt="Ekran görüntüsü 2026-03-17 172541" src="https://github.com/user-attachments/assets/b1dfec65-e3b6-4584-a1d2-106940dd8dcf" />
 
 ### Doktor Paneli
 
-<!-- Doktor dashboard görseli buraya eklenecek -->
-
-<!-- Bugünün randevuları görseli buraya eklenecek -->
+<img width="1918" height="823" alt="Ekran görüntüsü 2026-03-17 172612" src="https://github.com/user-attachments/assets/2852abc4-e94d-426a-8eea-861c421fb59f" />
+<img width="1919" height="826" alt="Ekran görüntüsü 2026-03-17 172621" src="https://github.com/user-attachments/assets/5b8c571b-8e2b-4745-995d-a4e7d852cfaf" />
 
 ### Hasta Paneli
 
-<!-- Hasta randevu listesi görseli buraya eklenecek -->
+<img width="1896" height="824" alt="Ekran görüntüsü 2026-03-17 172701" src="https://github.com/user-attachments/assets/fa5752f0-61a8-4379-94da-7547520ae967" />
+<img width="1896" height="821" alt="Ekran görüntüsü 2026-03-17 172726" src="https://github.com/user-attachments/assets/ab967bae-6dd3-433c-aa0b-67300f968f55" />
 
-<!-- Randevu bildirimleri görseli buraya eklenecek -->
 
-<!-- Yeni randevu oluşturma görseli buraya eklenecek -->
 
 
