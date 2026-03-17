@@ -1,0 +1,23 @@
+﻿@model Medinova.Models.AboutItem
+@{
+    ViewBag.Title = "Madde Sil";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Madde Sil</h1>
+    <a href="/Admin/AdminAboutItem/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="alert alert-danger"><strong>Dikkat!</strong> Silmek istediğinizden emin misiniz?</div>
+        <dl class="row">
+            <dt class="col-sm-3">Ad</dt><dd class="col-sm-9">@Model.Name</dd>
+            <dt class="col-sm-3">İkon</dt><dd class="col-sm-9">@Model.Icon</dd>
+        </dl>
+        @using (Html.BeginForm("Delete", "AdminAboutItem", new { id = Model.AboutItemId }, FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash mr-1"></i>Evet, Sil</button>
+            <a href="/Admin/AdminAboutItem/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>

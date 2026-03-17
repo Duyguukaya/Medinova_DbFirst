@@ -1,0 +1,59 @@
+﻿@model Medinova.Models.User
+@{
+    ViewBag.Title = "Kullanici Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var roles = ViewBag.Roles as List<Medinova.Models.Role>;
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Yeni Kullanici Ekle</h1>
+    <a href="/Admin/AdminUser/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "AdminUser", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ad</label>
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Soyad</label>
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Kullanici Adi</label>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Sifre</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Roller</label>
+                <div class="row">
+                    @if (roles != null)
+                    {
+                        foreach (var role in roles)
+                        {
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="selectedRoles" value="@role.RoleId" id="role_@role.RoleId">
+                                    <label class="form-check-label" for="role_@role.RoleId">@role.RoleName</label>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Kaydet</button>
+            <a href="/Admin/AdminUser/Index" class="btn btn-secondary ml-2">Iptal</a>
+        }
+    </div>
+</div>

@@ -1,4 +1,4 @@
-﻿using Medinova.Filters;
+using Medinova.Filters;
 using Medinova.Models;
 using Medinova.Repositories;
 using System.Threading.Tasks;
@@ -7,31 +7,34 @@ using System.Web.Mvc;
 namespace Medinova.Areas.Admin.Controllers
 {
     [RoleAuthorize("Admin")]
-    public class AdminAboutController : Controller
+    public class AdminDepartmentController : Controller
     {
         private readonly MedinovaContext _context;
-        private readonly IGenericRepository<About> _aboutRepository;
+        private readonly IGenericRepository<Department> _departmentRepo;
 
-        public AdminAboutController()
+        public AdminDepartmentController()
         {
             _context = new MedinovaContext();
-            _aboutRepository = new GenericRepository<About>(_context);
+            _departmentRepo = new GenericRepository<Department>(_context);
         }
 
         public async Task<ActionResult> Index()
         {
-            var values = await _aboutRepository.GetAllAsync();
-            return View(values);
+            var list = await _departmentRepo.GetAllAsync();
+            return View(list);
         }
 
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public async Task<ActionResult> Create(About model)
+        public async Task<ActionResult> Create(Department model)
         {
             if (ModelState.IsValid)
             {
-                await _aboutRepository.CreateAsync(model);
+                await _departmentRepo.CreateAsync(model);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -39,17 +42,17 @@ namespace Medinova.Areas.Admin.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            var item = await _aboutRepository.GetByIdAsync(id);
+            var item = await _departmentRepo.GetByIdAsync(id);
             if (item == null) return HttpNotFound();
             return View(item);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(About model)
+        public async Task<ActionResult> Edit(Department model)
         {
             if (ModelState.IsValid)
             {
-                await _aboutRepository.UpdateAsync(model);
+                await _departmentRepo.UpdateAsync(model);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -57,7 +60,7 @@ namespace Medinova.Areas.Admin.Controllers
 
         public async Task<ActionResult> Delete(int id)
         {
-            var item = await _aboutRepository.GetByIdAsync(id);
+            var item = await _departmentRepo.GetByIdAsync(id);
             if (item == null) return HttpNotFound();
             return View(item);
         }
@@ -65,7 +68,7 @@ namespace Medinova.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            await _aboutRepository.DeleteAsync(id);
+            await _departmentRepo.DeleteAsync(id);
             return RedirectToAction("Index");
         }
     }

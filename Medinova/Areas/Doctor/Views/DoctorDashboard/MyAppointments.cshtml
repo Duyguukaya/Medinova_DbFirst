@@ -1,0 +1,57 @@
+﻿@model List<Medinova.Models.Appointment>
+@{
+    ViewBag.Title = "Tüm Randevularım";
+    Layout = "~/Areas/Doctor/Views/Shared/_DoctorLayout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Tüm Randevularım</h1>
+    <a href="/Doctor/DoctorDashboard/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Panele Dön</a>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.Error as string))
+{
+    <div class="alert alert-warning">@ViewBag.Error</div>
+}
+else if (!Model.Any())
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle mr-2"></i>Henüz randevunuz bulunmamaktadır.</div>
+}
+else
+{
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr><th>#</th><th>Tarih</th><th>Saat</th><th>Hasta Adı</th><th>Telefon</th><th>E-posta</th><th>Durum</th></tr>
+                    </thead>
+                    <tbody>
+                        @{ int i = 1; }
+                        @foreach (var item in Model)
+                        {
+                            <tr class="@(item.IsActive == true ? "" : "table-secondary")">
+                                <td>@i</td>
+                                <td>@(item.AppointmentDate.HasValue ? item.AppointmentDate.Value.ToString("dd.MM.yyyy") : "-")</td>
+                                <td>@item.AppointmentTime</td>
+                                <td>@item.FullName</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>@item.Email</td>
+                                <td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        <span class="badge badge-success">Aktif</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-secondary">İptal</span>
+                                    }
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

@@ -1,4 +1,4 @@
-﻿using Medinova.Filters;
+using Medinova.Filters;
 using Medinova.Models;
 using Medinova.Repositories;
 using System.Threading.Tasks;
@@ -7,31 +7,31 @@ using System.Web.Mvc;
 namespace Medinova.Areas.Admin.Controllers
 {
     [RoleAuthorize("Admin")]
-    public class AdminAboutController : Controller
+    public class AdminBannerController : Controller
     {
         private readonly MedinovaContext _context;
-        private readonly IGenericRepository<About> _aboutRepository;
+        private readonly IGenericRepository<Banner> _bannerRepo;
 
-        public AdminAboutController()
+        public AdminBannerController()
         {
             _context = new MedinovaContext();
-            _aboutRepository = new GenericRepository<About>(_context);
+            _bannerRepo = new GenericRepository<Banner>(_context);
         }
 
         public async Task<ActionResult> Index()
         {
-            var values = await _aboutRepository.GetAllAsync();
-            return View(values);
+            var list = await _bannerRepo.GetAllAsync();
+            return View(list);
         }
 
         public ActionResult Create() => View();
 
         [HttpPost]
-        public async Task<ActionResult> Create(About model)
+        public async Task<ActionResult> Create(Banner model)
         {
             if (ModelState.IsValid)
             {
-                await _aboutRepository.CreateAsync(model);
+                await _bannerRepo.CreateAsync(model);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -39,17 +39,17 @@ namespace Medinova.Areas.Admin.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            var item = await _aboutRepository.GetByIdAsync(id);
+            var item = await _bannerRepo.GetByIdAsync(id);
             if (item == null) return HttpNotFound();
             return View(item);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(About model)
+        public async Task<ActionResult> Edit(Banner model)
         {
             if (ModelState.IsValid)
             {
-                await _aboutRepository.UpdateAsync(model);
+                await _bannerRepo.UpdateAsync(model);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -57,7 +57,7 @@ namespace Medinova.Areas.Admin.Controllers
 
         public async Task<ActionResult> Delete(int id)
         {
-            var item = await _aboutRepository.GetByIdAsync(id);
+            var item = await _bannerRepo.GetByIdAsync(id);
             if (item == null) return HttpNotFound();
             return View(item);
         }
@@ -65,7 +65,7 @@ namespace Medinova.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            await _aboutRepository.DeleteAsync(id);
+            await _bannerRepo.DeleteAsync(id);
             return RedirectToAction("Index");
         }
     }

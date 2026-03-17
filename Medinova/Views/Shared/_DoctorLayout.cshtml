@@ -1,0 +1,322 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Medinova - Doktor Paneli</title>
+
+    <link href="~/Templates/startbootstrap-sb-admin-2-gh-pages/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="~/Templates/startbootstrap-sb-admin-2-gh-pages/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        .sidebar-doctor {
+            background: linear-gradient(180deg, #1a6b3c 0%, #145c32 50%, #0e4526 100%) !important;
+        }
+
+        .sidebar-brand-doctor {
+            background: rgba(0,0,0,0.15);
+            padding: 1.5rem 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+            .sidebar-brand-doctor .brand-icon {
+                width: 48px;
+                height: 48px;
+                background: rgba(255,255,255,0.15);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 8px;
+            }
+
+                .sidebar-brand-doctor .brand-icon i {
+                    font-size: 1.4rem;
+                    color: #fff;
+                }
+
+            .sidebar-brand-doctor .brand-name {
+                color: #fff;
+                font-size: 1rem;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-align: center;
+                display: block;
+            }
+
+            .sidebar-brand-doctor .brand-sub {
+                color: rgba(255,255,255,0.6);
+                font-size: 0.7rem;
+                text-align: center;
+                display: block;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+
+        .doctor-nav-item .nav-link {
+            color: rgba(255,255,255,0.75) !important;
+            padding: 0.85rem 1rem !important;
+            border-radius: 0;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+            .doctor-nav-item .nav-link:hover {
+                color: #fff !important;
+                background: rgba(255,255,255,0.1) !important;
+                border-left-color: #5cd08a !important;
+            }
+
+            .doctor-nav-item .nav-link.active {
+                color: #fff !important;
+                background: rgba(255,255,255,0.15) !important;
+                border-left-color: #5cd08a !important;
+            }
+
+            .doctor-nav-item .nav-link i {
+                color: rgba(255,255,255,0.5);
+                width: 1.25rem;
+                margin-right: 0.5rem;
+            }
+
+            .doctor-nav-item .nav-link:hover i, .doctor-nav-item .nav-link.active i {
+                color: #5cd08a;
+            }
+
+        .sidebar-section-title {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+            padding: 1rem 1rem 0.3rem;
+        }
+
+        .sidebar-divider-doctor {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 0.5rem 0;
+        }
+
+        .topbar-doctor {
+            border-bottom: 2px solid #1a6b3c;
+        }
+
+            .topbar-doctor .nav-link {
+                color: #333 !important;
+            }
+
+        .doctor-badge {
+            background: #1a6b3c;
+            color: #fff;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .stat-card-doctor {
+            border-left: 4px solid #1a6b3c !important;
+        }
+
+            .stat-card-doctor .icon {
+                color: #1a6b3c;
+            }
+
+        .topbar-brand {
+            font-weight: 700;
+            color: #1a6b3c !important;
+            font-size: 0.9rem;
+        }
+
+        .profile-circle {
+            width: 36px;
+            height: 36px;
+            background: #1a6b3c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .footer-doctor {
+            border-top: 2px solid #e8f5e9;
+        }
+
+        .page-title-doctor {
+            color: #1a6b3c;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-dark accordion sidebar-doctor" id="accordionSidebar" style="min-height:100vh;">
+
+            <!-- Brand -->
+            <div class="sidebar-brand-doctor text-center">
+                <div class="brand-icon mx-auto">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <span class="brand-name">MEDINOVA</span>
+                <span class="brand-sub">Doktor Paneli</span>
+            </div>
+
+            <hr class="sidebar-divider-doctor">
+
+            <!-- Ana Sayfa -->
+            <div class="sidebar-section-title">Ana Ekran</div>
+            <li class="nav-item doctor-nav-item">
+                <a class="nav-link" href="/Doctor/DoctorDashboard/Index">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Panel Ozeti</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider-doctor">
+
+            <!-- Randevular -->
+            <div class="sidebar-section-title">Randevu Islemleri</div>
+
+            <li class="nav-item doctor-nav-item">
+                <a class="nav-link" href="/Doctor/DoctorDashboard/TodayAppointments">
+                    <i class="fas fa-fw fa-calendar-day"></i>
+                    <span>Bugunun Randevulari</span>
+                </a>
+            </li>
+
+            <li class="nav-item doctor-nav-item">
+                <a class="nav-link" href="/Doctor/DoctorDashboard/MyAppointments">
+                    <i class="fas fa-fw fa-list-alt"></i>
+                    <span>Tum Randevularim</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider-doctor">
+
+            <!-- Cikis -->
+            <div class="sidebar-section-title">Hesap</div>
+            <li class="nav-item doctor-nav-item">
+                <a class="nav-link" href="/Account/Logout">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Cikis Yap</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider-doctor d-none d-md-block">
+            <div class="text-center d-none d-md-inline mt-2 mb-3">
+                <button class="rounded-circle border-0" id="sidebarToggle" style="background:rgba(255,255,255,0.1);width:2rem;height:2rem;"></button>
+            </div>
+
+        </ul>
+        <!-- End Sidebar -->
+
+        <div id="content-wrapper" class="d-flex flex-column" style="background:#f4f7f6;">
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow-sm topbar-doctor">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars" style="color:#1a6b3c;"></i>
+                    </button>
+
+                    <!-- Hosgeldiniz mesaji -->
+                    <div class="d-none d-sm-flex align-items-center">
+                        <div style="width:6px;height:6px;border-radius:50%;background:#1a6b3c;margin-right:8px;"></div>
+                        <span style="font-size:0.8rem;color:#888;">Aktif Oturum</span>
+                    </div>
+
+                    <ul class="navbar-nav ml-auto align-items-center">
+
+                        <!-- Randevu al butonu -->
+                        <li class="nav-item mr-3 d-none d-lg-block">
+                            <a href="/Doctor/DoctorDashboard/TodayAppointments" class="btn btn-sm" style="background:#e8f5e9;color:#1a6b3c;border:1px solid #c8e6c9;font-size:0.75rem;">
+                                <i class="fas fa-calendar-day mr-1"></i>Bugunku Randevular
+                            </a>
+                        </li>
+
+                        <div style="width:1px;height:2rem;background:#e0e0e0;" class="mr-3 d-none d-lg-block"></div>
+
+                        <!-- Kullanici dropdown -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="d-none d-lg-block mr-2 text-right">
+                                    <div style="font-size:0.85rem;font-weight:600;color:#333;">Dr. @Session["fullName"]</div>
+                                    <div style="font-size:0.7rem;color:#1a6b3c;">Doktor</div>
+                                </div>
+                                <div class="profile-circle">
+                                    @{
+                                        var fn = Session["fullName"] as string;
+                                        string initials = "DR";
+                                        if (!string.IsNullOrEmpty(fn))
+                                        {
+                                            var parts = fn.Split(' ');
+                                            initials = parts.Length >= 2
+                                                ? (parts[0].Length > 0 ? parts[0][0].ToString() : "") + (parts[parts.Length - 1].Length > 0 ? parts[parts.Length - 1][0].ToString() : "")
+                                                : (fn.Length > 0 ? fn[0].ToString() : "DR");
+                                        }
+                                    }
+                                    @initials
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <div class="dropdown-header" style="background:#f8fffe;border-bottom:1px solid #e8f5e9;">
+                                    <div style="font-weight:700;color:#1a6b3c;">Dr. @Session["fullName"]</div>
+                                    <div style="font-size:0.75rem;color:#888;">Doktor Hesabi</div>
+                                </div>
+                                <a class="dropdown-item" href="/Doctor/DoctorDashboard/Index">
+                                    <i class="fas fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Panelim
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="/Account/Logout">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
+                                    Cikis Yap
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Topbar -->
+
+                <div class="container-fluid pb-4">
+                    @RenderBody()
+                </div>
+
+            </div>
+
+            <footer class="sticky-footer bg-white footer-doctor">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span style="color:#888;font-size:0.8rem;">
+                            <i class="fas fa-heartbeat mr-1" style="color:#1a6b3c;"></i>
+                            Copyright &copy; Medinova @DateTime.Now.Year &mdash; Doktor Paneli
+                        </span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <script src="~/Templates/startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Templates/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Templates/startbootstrap-sb-admin-2-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Templates/startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

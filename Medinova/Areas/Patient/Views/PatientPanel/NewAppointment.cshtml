@@ -1,0 +1,161 @@
+﻿@model Medinova.Models.Appointment
+@{
+    ViewBag.Title = "Yeni Randevu Al";
+    Layout = "~/Areas/Patient/Views/Shared/_PatientLayout.cshtml";
+    var dateList = ViewBag.DateList as List<System.Web.Mvc.SelectListItem>;
+    var times = ViewBag.Times as List<string>;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Yeni Randevu Al</h1>
+    <a href="/Patient/PatientPanel/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary(false, "", new { @class = "" })
+    </div>
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-calendar-plus mr-2"></i>Randevu Formu</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("NewAppointment", "PatientPanel", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ad Soyad</label>
+                        <input type="text" name="FullName" class="form-control" value="@ViewBag.FullName" required placeholder="Ad Soyadınız">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>E-posta</label>
+                        <input type="email" name="Email" class="form-control" value="@ViewBag.Email" required placeholder="E-posta Adresiniz">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="text" name="PhoneNumber" class="form-control" required placeholder="05XX XXX XX XX">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Bölüm Seçiniz</label>
+                        @Html.DropDownList("DepartmentId", (SelectList)ViewBag.Departments, "--- Bölüm Seçiniz ---", new { @class = "form-control", id = "departmentSelect" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Doktor Seçiniz</label>
+                        <select name="Doctorld" id="doctorSelect" class="form-control" required>
+                            <option value="">--- Önce Bölüm Seçiniz ---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Randevu Tarihi</label>
+                        <select name="AppointmentDate" id="dateSelect" class="form-control" required>
+                            <option value="">--- Tarih Seçiniz ---</option>
+                            @if (dateList != null)
+                            {
+                                foreach (var d in dateList)
+                                {
+                                    <option value="@d.Value">@d.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Saat Seçiniz</label>
+                <div id="timeSlots" class="row">
+                    @if (times != null)
+                    {
+                        foreach (var t in times)
+                        {
+                            <div class="col-md-2 col-4 mb-2">
+                                <div class="time-slot p-2 text-center border rounded" data-time="@t" style="cursor:pointer;">@t</div>
+                            </div>
+                        }
+                    }
+                </div>
+                <input type="hidden" name="AppointmentTime" id="selectedTime" required>
+                <small class="text-muted">Doktor ve tarih seçtikten sonra müsait saatler gösterilir. Yeşil = müsait, Kırmızı = dolu.</small>
+            </div>
+
+            <hr>
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-calendar-check mr-2"></i>Randevuyu Onayla
+            </button>
+            <a href="/Patient/PatientPanel/Index" class="btn btn-secondary btn-lg ml-2">İptal</a>
+        }
+    </div>
+</div>
+
+@section scripts {
+<style>
+    .time-slot { transition: all 0.2s; user-select: none; }
+    .time-slot.available { background: #f8fff8; border-color: #28a745 !important; color: #155724; }
+    .time-slot.booked { background: #fff5f5; border-color: #dc3545 !important; color: #721c24; cursor: not-allowed !important; }
+    .time-slot.selected { background: #007bff !important; border-color: #007bff !important; color: white !important; font-weight: bold; }
+</style>
+<script>
+    $(document).ready(function () {
+
+        $('#departmentSelect').change(function () {
+            var deptId = $(this).val();
+            $('#doctorSelect').html('<option value="">Yükleniyor...</option>');
+            if (!deptId) {
+                $('#doctorSelect').html('<option value="">--- Önce Bölüm Seçiniz ---</option>');
+                return;
+            }
+            $.getJSON('/Patient/PatientPanel/GetDoctorsByDepartment?departmentId=' + deptId, function (data) {
+                var opts = '<option value="">--- Doktor Seçiniz ---</option>';
+                $.each(data, function (i, d) {
+                    opts += '<option value="' + d.DoctorId + '">Dr. ' + d.FullName + '</option>';
+                });
+                $('#doctorSelect').html(opts);
+            });
+        });
+
+        function loadSlots() {
+            var docId = $('#doctorSelect').val();
+            var date = $('#dateSelect').val();
+            if (!docId || !date) return;
+
+            $.getJSON('/Patient/PatientPanel/GetAvailableHours?doctorId=' + docId + '&date=' + date, function (data) {
+                $.each(data, function (i, slot) {
+                    var el = $('.time-slot[data-time="' + slot.time + '"]');
+                    el.removeClass('available booked selected');
+                    if (slot.available) {
+                        el.addClass('available');
+                    } else {
+                        el.addClass('booked');
+                    }
+                });
+            });
+        }
+
+        $('#doctorSelect').change(loadSlots);
+        $('#dateSelect').change(loadSlots);
+
+        $(document).on('click', '.time-slot.available, .time-slot.selected', function () {
+            $('.time-slot').removeClass('selected');
+            $(this).addClass('selected');
+            $('#selectedTime').val($(this).data('time'));
+        });
+    });
+</script>
+}

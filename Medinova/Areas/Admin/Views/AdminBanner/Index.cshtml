@@ -1,11 +1,11 @@
-﻿@model List<Medinova.Models.About>
+﻿@model List<Medinova.Models.Banner>
 @{
-    ViewBag.Title = "Hakkımızda";
+    ViewBag.Title = "Banner Yönetimi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Hakkımızda</h1>
-    <a href="/Admin/AdminAbout/Create" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Yeni Ekle</a>
+    <h1 class="h3 mb-0 text-gray-800">Banner Yönetimi</h1>
+    <a href="/Admin/AdminBanner/Create" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Yeni Banner</a>
 </div>
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -21,11 +21,11 @@
                         <tr>
                             <td>@i</td>
                             <td>@item.Title</td>
-                            <td>@(item.Description != null && item.Description.Length > 60 ? item.Description.Substring(0, 60) + "..." : item.Description)</td>
+                            <td>@(item.Description != null && item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)</td>
                             <td>@if (!string.IsNullOrEmpty(item.ImageUrl)) { <img src="@item.ImageUrl" style="height:40px;" /> }</td>
                             <td>
-                                <a href="/Admin/AdminAbout/Edit/@item.AboutId" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="/Admin/AdminAbout/Delete/@item.AboutId" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                <a href="/Admin/AdminBanner/Edit/@item.BannerId" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                <a href="/Admin/AdminBanner/Delete/@item.BannerId" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         i++;

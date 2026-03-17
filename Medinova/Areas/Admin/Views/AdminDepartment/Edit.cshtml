@@ -1,0 +1,23 @@
+﻿@model Medinova.Models.Department
+@{
+    ViewBag.Title = "Bölüm Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Bölüm Düzenle</h1>
+    <a href="/Admin/AdminDepartment/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "AdminDepartment", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.DepartmentId)
+            <div class="form-group">
+                <label>Bölüm Adı</label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-warning"><i class="fas fa-save mr-1"></i>Güncelle</button>
+            <a href="/Admin/AdminDepartment/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>

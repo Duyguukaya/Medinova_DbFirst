@@ -1,0 +1,47 @@
+﻿@model List<Medinova.Models.Testimonial>
+@{
+    ViewBag.Title = "Referanslar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Referanslar</h1>
+    <a href="/Admin/AdminTestimonial/Create" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Yeni Ekle</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr><th>#</th><th>Ad Soyad</th><th>Unvan</th><th>Yorum</th><th>Onay</th><th>İşlemler</th></tr>
+                </thead>
+                <tbody>
+                    @{ int i = 1; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Title</td>
+                            <td>@(item.Comment != null && item.Comment.Length > 60 ? item.Comment.Substring(0, 60) + "..." : item.Comment)</td>
+                            <td>
+                                @if (item.IsApproved == true)
+                                {
+                                    <span class="badge badge-success">Onaylı</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Beklemede</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/AdminTestimonial/Edit/@item.TestimonialId" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                <a href="/Admin/AdminTestimonial/Delete/@item.TestimonialId" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

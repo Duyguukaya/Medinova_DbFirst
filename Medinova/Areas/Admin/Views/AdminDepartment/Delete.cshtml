@@ -1,0 +1,22 @@
+﻿@model Medinova.Models.Department
+@{
+    ViewBag.Title = "Bölüm Sil";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Bölüm Sil</h1>
+    <a href="/Admin/AdminDepartment/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="alert alert-danger"><strong>Dikkat!</strong> Bu bölümü silmek istediğinizden emin misiniz?</div>
+        <dl class="row">
+            <dt class="col-sm-3">Bölüm Adı</dt><dd class="col-sm-9">@Model.Name</dd>
+        </dl>
+        @using (Html.BeginForm("Delete", "AdminDepartment", new { id = Model.DepartmentId }, FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash mr-1"></i>Evet, Sil</button>
+            <a href="/Admin/AdminDepartment/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>

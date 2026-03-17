@@ -1,0 +1,64 @@
+﻿@model Medinova.Models.Appointment
+@{
+    ViewBag.Title = "Randevu Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Randevu Düzenle</h1>
+    <a href="/Admin/AdminAppointment/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "AdminAppointment", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.Appointmentid)
+            <div class="form-group">
+                @Html.LabelFor(m => m.FullName, "Hasta Adı Soyadı")
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Doktor</label>
+                @Html.DropDownList("Doctorld", (SelectList)ViewBag.Doctors, "--- Doktor Seçiniz ---", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber, "Telefon")
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, "E-posta")
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AppointmentDate, "Randevu Tarihi")
+                @Html.TextBoxFor(m => m.AppointmentDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            </div>
+            <div class="form-group">
+                <label>Randevu Saati</label>
+                <select name="AppointmentTime" class="form-control">
+                    @foreach (var time in (List<string>)ViewBag.Times)
+                    {
+                        if (Model.AppointmentTime == time)
+                        {
+                            <option value="@time" selected>@time</option>
+                        }
+                        else
+                        {
+                            <option value="@time">@time</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Durum</label>
+                <select name="IsActive" class="form-control">
+                    <option value="true" @(Model.IsActive == true ? "selected" : "")>Aktif</option>
+                    <option value="false" @(Model.IsActive != true ? "selected" : "")>Pasif</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-warning"><i class="fas fa-save mr-1"></i>Güncelle</button>
+            <a href="/Admin/AdminAppointment/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>

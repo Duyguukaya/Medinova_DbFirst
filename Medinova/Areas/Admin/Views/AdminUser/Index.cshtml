@@ -1,0 +1,43 @@
+﻿@model List<Medinova.Models.User>
+@{
+    ViewBag.Title = "Kullanıcılar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Kullanıcılar & Roller</h1>
+    <a href="/Admin/AdminUser/Create" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Yeni Kullanıcı</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr><th>#</th><th>Kullanıcı Adı</th><th>Ad Soyad</th><th>Roller</th><th>İşlemler</th></tr>
+                </thead>
+                <tbody>
+                    @{ int i = 1; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.UserName</td>
+                            <td>@item.FirstName @item.LastName</td>
+                            <td>
+                                @foreach (var role in item.Roles)
+                                {
+                                    string badgeClass = role.RoleName == "Admin" ? "badge-danger" : role.RoleName == "Doctor" ? "badge-primary" : "badge-success";
+                                    <span class="badge @badgeClass mr-1">@role.RoleName</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/AdminUser/Edit/@item.UserId" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                <a href="/Admin/AdminUser/Delete/@item.UserId" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

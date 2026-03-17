@@ -1,0 +1,31 @@
+﻿@model Medinova.Models.Doctor
+@{
+    ViewBag.Title = "Doktor Sil";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Doktor Sil</h1>
+    <a href="/Admin/AdminDoctor/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="alert alert-danger">
+            <strong>Dikkat!</strong> Bu doktoru silmek istediğinizden emin misiniz?
+        </div>
+        <dl class="row">
+            <dt class="col-sm-3">Ad Soyad</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+            <dt class="col-sm-3">Bölüm</dt>
+            <dd class="col-sm-9">@(Model.Department != null ? Model.Department.Name : "-")</dd>
+            <dt class="col-sm-3">Açıklama</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+        </dl>
+        @using (Html.BeginForm("Delete", "AdminDoctor", new { id = Model.DoctorId }, FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash mr-1"></i>Evet, Sil</button>
+            <a href="/Admin/AdminDoctor/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>

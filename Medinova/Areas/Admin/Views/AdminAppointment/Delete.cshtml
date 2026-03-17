@@ -1,0 +1,31 @@
+﻿@model Medinova.Models.Appointment
+@{
+    ViewBag.Title = "Randevu Sil";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Randevu Sil</h1>
+    <a href="/Admin/AdminAppointment/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="alert alert-danger"><strong>Dikkat!</strong> Bu randevuyu silmek istediğinizden emin misiniz?</div>
+        <dl class="row">
+            <dt class="col-sm-3">Hasta</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+            <dt class="col-sm-3">Doktor</dt>
+            <dd class="col-sm-9">@(Model.Doctor != null ? Model.Doctor.FullName : "-")</dd>
+            <dt class="col-sm-3">Tarih</dt>
+            <dd class="col-sm-9">@(Model.AppointmentDate.HasValue ? Model.AppointmentDate.Value.ToString("dd.MM.yyyy") : "-")</dd>
+            <dt class="col-sm-3">Saat</dt>
+            <dd class="col-sm-9">@Model.AppointmentTime</dd>
+        </dl>
+        @using (Html.BeginForm("Delete", "AdminAppointment", new { id = Model.Appointmentid }, FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash mr-1"></i>Evet, Sil</button>
+            <a href="/Admin/AdminAppointment/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>

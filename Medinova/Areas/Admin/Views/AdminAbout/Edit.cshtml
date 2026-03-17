@@ -1,0 +1,31 @@
+﻿@model Medinova.Models.About
+@{
+    ViewBag.Title = "Hakkımızda Düzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Hakkımızda Düzenle</h1>
+    <a href="/Admin/AdminAbout/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "AdminAbout", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.AboutId)
+            <div class="form-group">
+                <label>Başlık</label>
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Açıklama</label>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "4" })
+            </div>
+            <div class="form-group">
+                <label>Görsel URL</label>
+                @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-warning"><i class="fas fa-save mr-1"></i>Güncelle</button>
+            <a href="/Admin/AdminAbout/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>

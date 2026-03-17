@@ -1,0 +1,129 @@
+﻿@model List<Medinova.Models.Appointment>
+@{
+    ViewBag.Title = "Randevularım";
+    Layout = "~/Areas/Patient/Views/Shared/_PatientLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Hoşgeldiniz, @ViewBag.FullName</h1>
+    <a href="/Patient/PatientPanel/NewAppointment" class="btn btn-primary btn-sm shadow-sm">
+        <i class="fas fa-calendar-plus fa-sm text-white-50"></i> Yeni Randevu Al
+    </a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Toplam Randevu</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalCount</div>
+                    </div>
+                    <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Aktif Randevular</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ActiveCount</div>
+                    </div>
+                    <div class="col-auto"><i class="fas fa-calendar-check fa-2x text-gray-300"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">İptal Edilen</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.CancelledCount</div>
+                    </div>
+                    <div class="col-auto"><i class="fas fa-calendar-times fa-2x text-gray-300"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Randevu Geçmişim</h6>
+    </div>
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-4">
+                <i class="fas fa-calendar-plus fa-3x text-gray-300 mb-3"></i>
+                <p class="text-gray-500">Henüz randevunuz bulunmamaktadır.</p>
+                <a href="/Patient/PatientPanel/NewAppointment" class="btn btn-primary">İlk Randevunu Al</a>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Saat</th>
+                            <th>Doktor</th>
+                            <th>Durum</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            bool isPast = item.AppointmentDate.HasValue && item.AppointmentDate.Value < DateTime.Today;
+                            <tr class="@(item.IsActive != true ? "table-secondary" : "")">
+                                <td>@(item.AppointmentDate.HasValue ? item.AppointmentDate.Value.ToString("dd.MM.yyyy") : "-")</td>
+                                <td><strong>@item.AppointmentTime</strong></td>
+                                <td>@(item.Doctor != null ? "Dr. " + item.Doctor.FullName : "-")</td>
+                                <td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        if (isPast)
+                                        {
+                                            <span class="badge badge-info">Tamamlandı</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-success">Aktif</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-secondary">İptal Edildi</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.IsActive == true && !isPast)
+                                    {
+                                        using (Html.BeginForm("Cancel", "PatientPanel", new { id = item.Appointmentid }, FormMethod.Post, new { style = "display:inline", onsubmit = "return confirm('Randevunuzu iptal etmek istediğinizden emin misiniz?')" }))
+                                        {
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-times mr-1"></i>İptal Et
+                                            </button>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">-</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

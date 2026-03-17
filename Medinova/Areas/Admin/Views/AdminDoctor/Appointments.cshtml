@@ -1,0 +1,62 @@
+﻿@model List<Medinova.Models.Appointment>
+@{
+    ViewBag.Title = "Doktor Randevuları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dr. @ViewBag.DoctorName — Randevular</h1>
+    <a href="/Admin/AdminDoctor/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">Bu doktora ait randevu bulunmamaktadır.</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Hasta Adı</th>
+                            <th>Tarih</th>
+                            <th>Saat</th>
+                            <th>Telefon</th>
+                            <th>E-posta</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int i = 1; }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.FullName</td>
+                                <td>@(item.AppointmentDate.HasValue ? item.AppointmentDate.Value.ToString("dd.MM.yyyy") : "-")</td>
+                                <td>@item.AppointmentTime</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>@item.Email</td>
+                                <td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        <span class="badge badge-success">Aktif</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-secondary">Pasif</span>
+                                    }
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

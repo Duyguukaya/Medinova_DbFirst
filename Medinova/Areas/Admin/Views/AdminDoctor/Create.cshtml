@@ -1,0 +1,38 @@
+﻿@model Medinova.Models.Doctor
+@{
+    ViewBag.Title = "Doktor Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Yeni Doktor Ekle</h1>
+    <a href="/Admin/AdminDoctor/Index" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left mr-1"></i>Geri</a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "AdminDoctor", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.FullName)
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Bölüm</label>
+                @Html.DropDownList("DepartmentId", (SelectList)ViewBag.Departments, "--- Bölüm Seçiniz ---", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Image, "Görsel URL")
+                @Html.TextBoxFor(m => m.Image, new { @class = "form-control", placeholder = "https://..." })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, "Açıklama")
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "4" })
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Kaydet</button>
+            <a href="/Admin/AdminDoctor/Index" class="btn btn-secondary ml-2">İptal</a>
+        }
+    </div>
+</div>
