@@ -1,85 +1,68 @@
-# 🏥 MEDİNOVA – Çok Panelli Hastane Yönetim Sistemi
+# 🏥 MEDİNOVA – Yapay Zeka Destekli Çok Panelli Hastane Yönetim Sistemi
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![ASP.NET](https://img.shields.io/badge/ASP.NET-MVC%205-purple.svg)
 ![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blueviolet.svg)
+![OpenAI](https://img.shields.io/badge/AI-OpenAI%20GPT--4-green.svg)
 ![Status](https://img.shields.io/badge/Status-Completed-success.svg)
-![EF](https://img.shields.io/badge/Entity%20Framework-Database%20First-orange.svg)
 
-**MEDİNOVA**; hastaların randevu oluşturduğu, doktorların günlük programlarını takip ettiği ve yöneticilerin tüm sistemi kontrol ettiği; modern ve kullanıcı dostu bir **hastane yönetim sistemidir.**
+**MEDİNOVA**; hastaların randevu oluşturduğu, doktorların günlük programlarını takip ettiği ve yöneticilerin tüm sistemi kontrol ettiği; modern, kullanıcı dostu ve **Yapay Zeka (OpenAI) destekli** bir hastane yönetim sistemidir.
 
 Proje; **ASP.NET MVC 5**, **Entity Framework Database-First**, **Generic Repository Pattern** ve **3 farklı kullanıcı paneli** kullanılarak kurumsal standartlarda geliştirilmiştir.
 
 ---
 
+## 🤖 Öne Çıkan Özellik: Akıllı Tanı & Bölüm Önerisi (OpenAI)
+
+MEDİNOVA'yı diğer sistemlerden ayıran en büyük fark, bünyesindeki **OpenAI API (GPT-4 / GPT-3.5 Turbo)** entegrasyonudur. Bu özellik sayesinde hastalar, "Hangi bölüme gitmeliyim?" kararsızlığını yaşamazlar.
+
+* **Akıllı Şikayet Analizi:** Hasta, tıbbi bir terim bilmek zorunda kalmadan sadece şikayetini (örn: "Gözlerimde aşırı yanma ve kaşıntı var") doğal dilde yazar.
+* **Otomatik Bölüm Yönlendirme:** Yapay zeka, metni gerçek zamanlı analiz ederek en uygun tıbbi birimi (örn: Göz Hastalıkları) belirler ve randevu formundaki "Bölüm" alanını otomatik olarak seçer.
+* **Hızlı Doktor Eşleşmesi:** Analiz sonucu önerilen bölüme ait aktif doktorlar AJAX ile anında listelenir, böylece hastanın yanlış birimden randevu alması engellenir.
+
+---
+
 ## 🚀 Proje Hakkında ve Öne Çıkanlar
 
-MEDİNOVA, klasik hastane web sitelerinden farklı olarak her kullanıcı tipine özel izole panel sunar ve randevu sürecini uçtan uca yönetir.
-
-* **🛡️ Rol Tabanlı Yetkilendirme:** Admin, Doctor ve Patient rolleri tamamen birbirinden izole panellere yönlendirilir. Yetkisiz erişimler otomatik olarak Login sayfasına yönlendirilir.
-* **📅 Akıllı Randevu Sistemi:** Bölüm → Doktor → Tarih → Saat sıralamasıyla çalışan AJAX destekli randevu formu; dolu saatleri gerçek zamanlı gösterir, çakışmaları engeller.
-* **🔔 Randevu Hatırlatıcı:** Hasta paneline giriş yapıldığında 7 gün içindeki randevular için renkli bildirimler gösterilir (bugün, yarın, X gün kaldı).
-* **⚙️ Dinamik Anasayfa:** Banner, Hakkımızda, Doktorlar ve Referanslar bölümleri veritabanından dinamik olarak çekilir; içerik boşsa hata vermez, varsayılan değerler gösterilir.
-* **📊 Admin Dashboard:** Doktor, randevu, bölüm ve kullanıcı sayılarını tek ekranda özetler.
+* **🛡️ Rol Tabanlı Yetkilendirme:** Admin, Doctor ve Patient rolleri tamamen birbirinden izole panellere yönlendirilir.
+* **📅 Akıllı Randevu Sistemi:** Bölüm → Doktor → Tarih → Saat sıralamasıyla çalışan AJAX destekli randevu formu; dolu saatleri gerçek zamanlı gösterir.
+* **🔔 Randevu Hatırlatıcı:** Hasta paneline giriş yapıldığında 7 gün içindeki randevular için renkli bildirimler gösterilir (Bugün, Yarın, X gün kaldı).
+* **⚙️ Dinamik Anasayfa:** Banner, Hakkımızda, Doktorlar ve Referanslar bölümleri Admin panelinden dinamik olarak yönetilir.
+* **📊 Admin Dashboard:** Doktor, randevu, bölüm ve kullanıcı sayılarını tek ekranda özetleyen gelişmiş istatistik kartları.
 
 ---
 
 ## 👥 Panel Yapısı ve Özellikler
 
-Sistemde **Admin, Doctor ve Patient** olmak üzere birbirinden izole 3 farklı panel bulunmaktadır.
-
 ### 🛡️ 1. Admin Paneli
-Tam yetkili yönetim merkezidir.
-* **Dashboard & İstatistikler:** Doktor, randevu, bölüm ve kullanıcı sayılarını gösteren özet ekran.
-* **Doktor Yönetimi:** Doktor ekleme, düzenleme, silme ve her doktora ait randevu listesini görüntüleme.
-* **Randevu Yönetimi:** Tüm randevuları listeleme, düzenleme, silme ve aktif/pasif durumunu değiştirme.
-* **Bölüm Yönetimi:** Hastane bölümlerini tam CRUD işlemleriyle yönetme.
-* **Kullanıcı & Rol Yönetimi:** Kullanıcı oluşturma, düzenleme, silme ve checkbox ile rol atama.
-* **İçerik Yönetimi:** Banner, Hakkımızda, Hakkımızda Maddeleri ve Referanslar için tam CRUD.
+* **Dashboard:** Hastanenin genel doluluk ve kullanıcı verilerini özetleyen ekran.
+* **Doktor & Bölüm Yönetimi:** Tam CRUD işlemleri ve doktor randevu listesi görüntüleme.
+* **Randevu Yönetimi:** Tüm randevuları listeleme, durum güncelleme (Aktif/Pasif) ve silme.
+* **İçerik Yönetimi:** Web sitesindeki görselleri ve metinleri veritabanı üzerinden anlık güncelleme.
 
 ### 🩺 2. Doktor Paneli
-İçerik üreticileri için özel alandır.
-* **Panel Özeti:** Bugünkü, yaklaşan ve toplam randevu sayılarını gösteren istatistik kartları.
-* **Bugünün Randevuları:** O güne ait randevuları saate göre sıralı listeler.
-* **Tüm Randevularım:** Geçmiş ve gelecek tüm randevuları tarihe göre azalan sırada listeler.
-* **Profil:** Oturum açmış doktorun adı topbar'da ve sidebar'da gösterilir.
+* **Panel Özeti:** Bugünkü ve yaklaşan randevu sayılarını gösteren istatistikler.
+* **İş Akışı:** Bugünün randevularını saate göre sıralı, geçmiş randevuları ise tarihe göre azalan sırada listeleme.
 
 ### 👤 3. Hasta Paneli
-Son kullanıcı deneyim alanıdır.
-* **Randevu Takibi:** Hastanın tüm randevularını aktif, tamamlandı ve iptal edildi olarak renkli badge'lerle gösterir.
-* **Randevu Oluşturma:** Bölüm seçince AJAX ile doktorlar yüklenir; doktor ve tarih seçince dolu/boş saatler renk kodlu gösterilir.
-* **Randevu İptali:** Tarihi geçmemiş aktif randevular tek tıkla iptal edilebilir; geçmiş randevular iptal edilemez.
-* **Akıllı Bildirimler:** Giriş yapıldığında 7 gün içindeki randevular için uyarı gösterilir. Tablo satırlarında "Bugün!", "Yarın!", "X gün kaldı" ve "Günü Geçti" badge'leri bulunur.
+* **Randevu Takibi:** Aktif, tamamlandı ve iptal edildi durumlarını renkli badge'lerle izleme.
+* **İptal Mekanizması:** Tarihi geçmemiş aktif randevuları tek tıkla iptal edebilme.
 
----
-
-## 🌐 Genel Web Sitesi Özellikleri
-
-* **Dinamik Hero Section:** Banner tablosundan başlık, açıklama ve arka plan görseli çekilir.
-* **Dinamik Hakkımızda:** About tablosundan içerik, AboutItems tablosundan ikonlu maddeler gösterilir.
-* **Doktor Carousel:** Tüm doktorlar bölüm bilgileriyle birlikte owl carousel'de listelenir.
-* **Referanslar:** Sadece onaylı (IsApproved = true) referanslar görüntülenir.
-* **AJAX Randevu Formu:** Bölüm → Doktor → Tarih → Saat akışı; dolu saatler "(Dolu)" etiketiyle pasif gösterilir.
-* **Türkçe Arayüz:** Navbar, footer, form alanları ve tüm içerikler Türkçedir.
+###  4. Ana Sayfa Paneli,
+* **AI Desteği:** Şikayetini yazarak kendisine en uygun bölümün önerilmesini sağlayan arayüz.
 
 ---
 
 ## 🛠️ Teknik Mimari ve Kullanılan Teknolojiler
 
-Proje **Repository Pattern** kullanılarak **N-Katmanlı** bir yapıda geliştirilmiştir.
-
 | Alan | Teknoloji / Araç |
 | :--- | :--- |
-| **Framework** | ASP.NET MVC 5 |
-| **Platform** | .NET Framework 4.8 |
+| **Framework** | ASP.NET MVC 5 (.NET Framework 4.8) |
+| **Yapay Zeka** | OpenAI API (GPT-4 / GPT-3.5 Turbo) |
 | **Veritabanı & ORM** | MS SQL Server, Entity Framework 6 (Database First) |
-| **Mimari Desenler** | Generic Repository Pattern, Areas (Admin/Doctor/Patient) |
-| **Kimlik Doğrulama** | FormsAuthentication, Session tabanlı rol yönetimi |
+| **Mimari Desenler** | Generic Repository Pattern, Areas, N-Layered Architecture |
+| **UI & Frontend** | Bootstrap 4, jQuery, AJAX, FontAwesome 5, SB Admin 2 |
 | **Mapping** | AutoMapper |
-| **UI & Frontend** | Bootstrap 4, jQuery, FontAwesome 5, SB Admin 2 |
-| **UI Yapısı** | Areas, Partial Views, ChildActionOnly, Layouts |
-| **AJAX** | jQuery AJAX (doktor filtreleme, saat kontrolü) |
-| **Veritabanı Tasarımı** | Database First, EDMX Model |
 
 ---
 
