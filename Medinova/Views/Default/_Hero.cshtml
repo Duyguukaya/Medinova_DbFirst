@@ -2,7 +2,7 @@
 @{
     bool hasData  = Model != null;
     string title  = hasData && !string.IsNullOrWhiteSpace(Model.Title)
-                    ? Model.Title : "Best Healthcare Solution In Your City";
+                    ? Model.Title : "Sagliginiz Bizim Onceliğimiz";
     string desc   = hasData ? Model.Description : null;
     string imgUrl = hasData && !string.IsNullOrWhiteSpace(Model.ImageUrl)
                     ? Model.ImageUrl : "~/Templates/Medinova-1.0.0/img/carousel-1.jpg";
@@ -13,7 +13,7 @@
             <div class="col-lg-8 text-center text-lg-start">
                 <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5"
                     style="border-color:rgba(256,256,256,.3) !important;">
-                    Welcome To Medinova
+                    Medinova'ya Hosgeldiniz
                 </h5>
                 <h1 class="display-1 text-white mb-md-4">@title</h1>
                 @if (!string.IsNullOrWhiteSpace(desc))
@@ -22,7 +22,7 @@
                 }
                 <div class="pt-2">
                     <a href="#appointment" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Randevu Al</a>
-                    <a href="#about"       class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Hakkimizda</a>
+                    <a href="#about" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Hakkimizda</a>
                 </div>
             </div>
         </div>

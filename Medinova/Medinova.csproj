@@ -2383,12 +2383,12 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_DoctorLayout.cshtml" />
     <Content Include="Views\Shared\_PatientLayout.cshtml" />
-    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Default\DefaultAppointment.cshtml" />
     <Content Include="Views\Default\_About.cshtml" />
     <Content Include="Views\Default\_Doctors.cshtml" />
     <Content Include="Views\Default\_Hero.cshtml" />
     <Content Include="Views\Default\_Testimonials.cshtml" />
-    <Content Include="Views\Default\DefaultAppointment.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

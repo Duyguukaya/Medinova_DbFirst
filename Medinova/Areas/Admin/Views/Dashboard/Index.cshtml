@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "Panel Özeti";
+    ViewBag.Title = "Panel Ozeti";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Panel Özeti</h1>
+    <h1 class="h3 mb-0 text-gray-800">Panel Ozeti</h1>
 </div>
 
 <div class="row">
@@ -39,7 +39,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Bölümler</div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Bolumler</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.DepartmentCount</div>
                     </div>
                     <div class="col-auto"><i class="fas fa-briefcase-medical fa-2x text-gray-300"></i></div>
@@ -52,7 +52,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Kullanıcılar</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Kullanicilar</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.UserCount</div>
                     </div>
                     <div class="col-auto"><i class="fas fa-users fa-2x text-gray-300"></i></div>
@@ -62,17 +62,25 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-6 mb-4">
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 mb-4">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Hızlı Erişim</h6>
+            <div class="card-header py-3 text-center">
+                <h6 class="m-0 font-weight-bold text-primary">Hizli Erisim</h6>
             </div>
             <div class="card-body">
-                <a href="/Admin/AdminDoctor/Index" class="btn btn-primary btn-block mb-2"><i class="fas fa-user-md mr-2"></i>Doktorları Yönet</a>
-                <a href="/Admin/AdminAppointment/Index" class="btn btn-success btn-block mb-2"><i class="fas fa-calendar-check mr-2"></i>Randevuları Görüntüle</a>
-                <a href="/Admin/AdminDepartment/Index" class="btn btn-info btn-block mb-2"><i class="fas fa-briefcase-medical mr-2"></i>Bölümleri Yönet</a>
-                <a href="/Admin/AdminUser/Index" class="btn btn-warning btn-block"><i class="fas fa-users mr-2"></i>Kullanıcıları Yönet</a>
+                <a href="/Admin/AdminDoctor/Index" class="btn btn-primary btn-block mb-2">
+                    <i class="fas fa-user-md mr-2"></i>Doktorlari Yonet
+                </a>
+                <a href="/Admin/AdminAppointment/Index" class="btn btn-success btn-block mb-2">
+                    <i class="fas fa-calendar-check mr-2"></i>Randevulari Goruntule
+                </a>
+                <a href="/Admin/AdminDepartment/Index" class="btn btn-info btn-block mb-2">
+                    <i class="fas fa-briefcase-medical mr-2"></i>Bolumleri Yonet
+                </a>
+                <a href="/Admin/AdminUser/Index" class="btn btn-warning btn-block">
+                    <i class="fas fa-users mr-2"></i>Kullanicilari Yonet
+                </a>
             </div>
         </div>
     </div>

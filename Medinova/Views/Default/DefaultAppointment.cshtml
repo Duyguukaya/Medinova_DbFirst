@@ -5,12 +5,12 @@
         <div class="row gx-5">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="mb-4">
-                    <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Appointment</h5>
-                    <h1 class="display-4">Make An Appointment For Your Family</h1>
+                    <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Randevu</h5>
+                    <h1 class="display-4">Aileniz Icin Randevu Alin</h1>
                 </div>
                 <p class="text-white mb-5">
                     Uzman doktorlarimizla kolayca randevu alin. Sagliginiz bizim icin onceliklidir.
-                    Size en uygun zamanda, en iyi saglik hizmetini sunmak icin buradayiz.
+                    Size en uygun zamanda en iyi saglik hizmetini sunmak icin buradayiz.
                 </p>
                 <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#doctors">Doktor Bul</a>
                 <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#about">Hakkimizda</a>
@@ -31,7 +31,7 @@
                                 }
                                 else
                                 {
-                                    <select class="form-control" id="DepartmentId" disabled>
+                                    <select class="form-control" disabled>
                                         <option>Bolum bulunamadi</option>
                                     </select>
                                 }
@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-12 col-sm-6">
                                 <input type="email" class="form-control bg-light border-0"
-                                       name="Email" placeholder="Email Adresiniz"
+                                       name="Email" placeholder="E-posta Adresiniz"
                                        style="height:55px;" required>
                             </div>
                             <div class="col-12 col-sm-6">
@@ -67,7 +67,7 @@
                                 }
                                 else
                                 {
-                                    <select class="form-control" id="AppointmentDate" disabled>
+                                    <select class="form-control" disabled>
                                         <option>Tarih bulunamadi</option>
                                     </select>
                                 }
@@ -94,17 +94,13 @@
 
 <script>
     $(document).ready(function () {
-
         $("#DepartmentId").change(function () {
             var selectedDepId = $(this).val();
             var doctorDropdown = $("#DoctorId");
             var timeDropdown = $("#AppointmentTime");
-
             doctorDropdown.html('<option value="">Yukleniyor...</option>');
             timeDropdown.html('<option value="">--- Once Doktor Secin ---</option>');
-
             if (!selectedDepId) return;
-
             $.ajax({
                 url: '/Default/GetDoctorsByDepartmentId',
                 type: 'GET',
@@ -113,22 +109,20 @@
                 success: function (data) {
                     doctorDropdown.html('<option value="">--- Doktor Seciniz ---</option>');
                     $.each(data, function (i, doctor) {
-                        doctorDropdown.append($('<option>').val(doctor.Value).text(doctor.Text));
+                        doctorDropdown.append($("<option>").val(doctor.Value).text(doctor.Text));
                     });
                 }
             });
         });
 
-        $("#AppointmentDate").change(function () {
-            var selectedDate = $(this).val();
+        $("#AppointmentDate, #DoctorId").change(function () {
+            var selectedDate = $("#AppointmentDate").val();
             var selectedDoctorId = $("#DoctorId").val();
             var timeDropdown = $("#AppointmentTime");
-
             if (!selectedDate || !selectedDoctorId) {
                 timeDropdown.html('<option value="">--- Once Doktor ve Tarih Secin ---</option>');
                 return;
             }
-
             $.ajax({
                 url: '/Default/GetAvailableHours',
                 type: 'POST',
@@ -138,17 +132,12 @@
                     timeDropdown.empty();
                     $.each(data, function (i, item) {
                         var text = item.IsBooked ? item.Time + " (Dolu)" : item.Time;
-                        var option = $('<option>').val(item.Time).text(text);
+                        var option = $("<option>").val(item.Time).text(text);
                         if (item.IsBooked) option.prop('disabled', true);
                         timeDropdown.append(option);
                     });
                 }
             });
-        });
-
-        $("#DoctorId").change(function () {
-            var selectedDate = $("#AppointmentDate").val();
-            if (selectedDate) $("#AppointmentDate").trigger('change');
         });
     });
 </script>

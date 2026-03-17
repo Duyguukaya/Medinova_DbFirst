@@ -3,7 +3,7 @@
     var aboutItems = ViewBag.AboutItems as List<Medinova.Models.AboutItem>;
     bool hasAbout  = Model != null;
     string title   = hasAbout && !string.IsNullOrWhiteSpace(Model.Title)
-                     ? Model.Title : "Best Medical Care For Yourself and Your Family";
+                     ? Model.Title : "En Iyi Saglik Hizmeti Sizin Icin";
     string desc    = hasAbout ? Model.Description : null;
     string imgUrl  = hasAbout && !string.IsNullOrWhiteSpace(Model.ImageUrl)
                      ? Model.ImageUrl : "~/Templates/Medinova-1.0.0/img/about.jpg";
@@ -20,7 +20,7 @@
             </div>
             <div class="col-lg-7">
                 <div class="mb-4">
-                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Us</h5>
+                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Hakkimizda</h5>
                     <h1 class="display-4">@title</h1>
                 </div>
                 @if (!string.IsNullOrWhiteSpace(desc))

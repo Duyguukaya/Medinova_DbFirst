@@ -1,16 +1,75 @@
 ﻿@model List<Medinova.Models.Appointment>
 @{
-    ViewBag.Title = "Randevularım";
+    ViewBag.Title = "Randevularim";
     Layout = "~/Areas/Patient/Views/Shared/_PatientLayout.cshtml";
+
+    // Yaklasan randevulari hesapla (aktif, gelecekte, 7 gun icinde)
+    var upcoming = Model != null ? Model
+        .Where(a => a.IsActive == true
+                 && a.AppointmentDate.HasValue
+                 && a.AppointmentDate.Value >= DateTime.Today
+                 && a.AppointmentDate.Value <= DateTime.Today.AddDays(7))
+        .OrderBy(a => a.AppointmentDate)
+        .ToList()
+        : new List<Medinova.Models.Appointment>();
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Hoşgeldiniz, @ViewBag.FullName</h1>
+    <h1 class="h3 mb-0 text-gray-800">Hosgeldiniz, @ViewBag.FullName</h1>
     <a href="/Patient/PatientPanel/NewAppointment" class="btn btn-primary btn-sm shadow-sm">
         <i class="fas fa-calendar-plus fa-sm text-white-50"></i> Yeni Randevu Al
     </a>
 </div>
 
+@* ── YAKLASAN RANDEVU BİLDİRİMLERİ ── *@
+@if (upcoming.Any())
+{
+    foreach (var appt in upcoming)
+    {
+        int daysLeft = (appt.AppointmentDate.Value - DateTime.Today).Days;
+        string alertClass, icon, mesaj;
+
+        if (daysLeft == 0)
+        {
+            alertClass = "alert-danger";
+            icon = "fa-bell";
+            mesaj = "Bugun! Randevunuzu kaçırmayın.";
+        }
+        else if (daysLeft == 1)
+        {
+            alertClass = "alert-warning";
+            icon = "fa-exclamation-circle";
+            mesaj = "Yarin randevunuz var, unutmayın!";
+        }
+        else
+        {
+            alertClass = "alert-info";
+            icon = "fa-clock";
+            mesaj = daysLeft + " gun sonra randevunuz var.";
+        }
+
+        <div class="alert @alertClass alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fas @icon fa-lg mr-3"></i>
+                <div>
+                    <strong>Randevu Hatırlatıcı:</strong>
+                    @mesaj
+                    <span class="ml-2">
+                        <i class="fas fa-user-md mr-1"></i>
+                        @(appt.Doctor != null ? appt.Doctor.FullName : "")
+                        &mdash;
+                        <i class="fas fa-calendar-day mr-1 ml-1"></i>
+                        @appt.AppointmentDate.Value.ToString("dd.MM.yyyy")
+                        <strong class="ml-1">@appt.AppointmentTime</strong>
+                    </span>
+                </div>
+            </div>
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        </div>
+    }
+}
+
+@* ── İSTATİSTİK KARTLARI ── *@
 <div class="row mb-4">
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
@@ -43,7 +102,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">İptal Edilen</div>
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Iptal Edilen</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.CancelledCount</div>
                     </div>
                     <div class="col-auto"><i class="fas fa-calendar-times fa-2x text-gray-300"></i></div>
@@ -53,17 +112,18 @@
     </div>
 </div>
 
+@* ── RANDEVU LİSTESİ ── *@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Randevu Geçmişim</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Randevu Gecmisim</h6>
     </div>
     <div class="card-body">
-        @if (!Model.Any())
+        @if (Model == null || !Model.Any())
         {
             <div class="text-center py-4">
                 <i class="fas fa-calendar-plus fa-3x text-gray-300 mb-3"></i>
-                <p class="text-gray-500">Henüz randevunuz bulunmamaktadır.</p>
-                <a href="/Patient/PatientPanel/NewAppointment" class="btn btn-primary">İlk Randevunu Al</a>
+                <p class="text-gray-500">Henuz randevunuz bulunmamaktadir.</p>
+                <a href="/Patient/PatientPanel/NewAppointment" class="btn btn-primary">Ilk Randevunu Al</a>
             </div>
         }
         else
@@ -76,23 +136,37 @@
                             <th>Saat</th>
                             <th>Doktor</th>
                             <th>Durum</th>
-                            <th>İşlem</th>
+                            <th>Islem</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             bool isPast = item.AppointmentDate.HasValue && item.AppointmentDate.Value < DateTime.Today;
+                            int days = item.AppointmentDate.HasValue && !isPast && item.IsActive == true
+                                       ? (item.AppointmentDate.Value - DateTime.Today).Days : -1;
                             <tr class="@(item.IsActive != true ? "table-secondary" : "")">
-                                <td>@(item.AppointmentDate.HasValue ? item.AppointmentDate.Value.ToString("dd.MM.yyyy") : "-")</td>
+                                <td>
+                                    @(item.AppointmentDate.HasValue ? item.AppointmentDate.Value.ToString("dd.MM.yyyy") : "-")
+                                    @if (isPast && item.IsActive == true)
+                                    {
+                                        <span class="badge badge-secondary ml-1">Gunu Gecti</span>
+                                    }
+                                    else if (days >= 0 && days <= 7)
+                                    {
+                                        string badge = days == 0 ? "badge-danger" : days == 1 ? "badge-warning" : "badge-info";
+                                        string text = days == 0 ? "Bugun!" : days == 1 ? "Yarin!" : days + " gun kaldi";
+                                        <span class="badge @badge ml-1">@text</span>
+                                    }
+                                </td>
                                 <td><strong>@item.AppointmentTime</strong></td>
-                                <td>@(item.Doctor != null ? "Dr. " + item.Doctor.FullName : "-")</td>
+                                <td>@(item.Doctor != null ? item.Doctor.FullName : "-")</td>
                                 <td>
                                     @if (item.IsActive == true)
                                     {
                                         if (isPast)
                                         {
-                                            <span class="badge badge-info">Tamamlandı</span>
+                                            <span class="badge badge-info">Tamamlandi</span>
                                         }
                                         else
                                         {
@@ -101,16 +175,17 @@
                                     }
                                     else
                                     {
-                                        <span class="badge badge-secondary">İptal Edildi</span>
+                                        <span class="badge badge-secondary">Iptal Edildi</span>
                                     }
                                 </td>
                                 <td>
                                     @if (item.IsActive == true && !isPast)
                                     {
-                                        using (Html.BeginForm("Cancel", "PatientPanel", new { id = item.Appointmentid }, FormMethod.Post, new { style = "display:inline", onsubmit = "return confirm('Randevunuzu iptal etmek istediğinizden emin misiniz?')" }))
+                                        using (Html.BeginForm("Cancel", "PatientPanel", new { id = item.Appointmentid }, FormMethod.Post,
+                                               new { style = "display:inline", onsubmit = "return confirm('Randevunuzu iptal etmek istediginizden emin misiniz?')" }))
                                         {
                                             <button type="submit" class="btn btn-danger btn-sm">
-                                                <i class="fas fa-times mr-1"></i>İptal Et
+                                                <i class="fas fa-times mr-1"></i>Iptal Et
                                             </button>
                                         }
                                     }
