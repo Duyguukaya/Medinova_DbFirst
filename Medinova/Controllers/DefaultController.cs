@@ -164,7 +164,7 @@ namespace Medinova.Controllers
                 lines.AppendLine("}");
                 string prompt = lines.ToString();
 
-                string apiKey = "sk-proj-BURAYA_API_KEYINI_YAZ";
+                string apiKey = "sk-api-key";
 
                 using (var client = new System.Net.Http.HttpClient())
                 {
