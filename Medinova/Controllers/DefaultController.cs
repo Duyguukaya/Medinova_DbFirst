@@ -132,6 +132,7 @@ namespace Medinova.Controllers
             return Json(dtoList, JsonRequestBehavior.AllowGet);
         }
 
+        // ─── AI DOKTOR ONERISI ───────────────────────────────────────────────
         [HttpPost]
         public async Task<JsonResult> GetAIRecommendation(string symptom)
         {
@@ -163,7 +164,7 @@ namespace Medinova.Controllers
                 lines.AppendLine("}");
                 string prompt = lines.ToString();
 
-                string apiKey = System.Configuration.ConfigurationManager.AppSettings["OpenAI_ApiKey"];
+                string apiKey = "sk-proj-BURAYA_API_KEYINI_YAZ";
 
                 using (var client = new System.Net.Http.HttpClient())
                 {
