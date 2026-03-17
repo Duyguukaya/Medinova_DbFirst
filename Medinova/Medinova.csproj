@@ -2200,8 +2200,6 @@
     <Content Include="Templates\Medinova-1.0.0\scss\bootstrap\scss\_utilities.scss" />
     <Content Include="Templates\Medinova-1.0.0\scss\bootstrap\scss\_variables.scss" />
     <Content Include="Views\Shared\_UILayout.cshtml" />
-    <Content Include="Views\Default\Index.cshtml" />
-    <Content Include="Views\Default\DefaultAppointment.cshtml" />
     <Content Include="Views\AdminAbout\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Templates\startbootstrap-sb-admin-2-gh-pages\.browserslistrc" />
@@ -2385,6 +2383,12 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_DoctorLayout.cshtml" />
     <Content Include="Views\Shared\_PatientLayout.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Default\_About.cshtml" />
+    <Content Include="Views\Default\_Doctors.cshtml" />
+    <Content Include="Views\Default\_Hero.cshtml" />
+    <Content Include="Views\Default\_Testimonials.cshtml" />
+    <Content Include="Views\Default\DefaultAppointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

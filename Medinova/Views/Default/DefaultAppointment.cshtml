@@ -1,5 +1,6 @@
-﻿
-<div class="container-fluid bg-primary my-5 py-5">
+﻿@{
+}
+<div class="container-fluid bg-primary my-5 py-5" id="appointment">
     <div class="container py-5">
         <div class="row gx-5">
             <div class="col-lg-6 mb-5 mb-lg-0">
@@ -8,57 +9,79 @@
                     <h1 class="display-4">Make An Appointment For Your Family</h1>
                 </div>
                 <p class="text-white mb-5">
-                    Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum.
-                    Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero
-                    eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit.
-                    Sea dolore sanctus sed et. Takimata takimata sanctus sed.
+                    Uzman doktorlarimizla kolayca randevu alin. Sagliginiz bizim icin onceliklidir.
+                    Size en uygun zamanda, en iyi saglik hizmetini sunmak icin buradayiz.
                 </p>
-                <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#!">Find Doctor</a>
-                <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">Read More</a>
+                <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#doctors">Doktor Bul</a>
+                <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#about">Hakkimizda</a>
             </div>
             <div class="col-lg-6">
                 <div class="bg-white text-center rounded p-5">
-                    <h1 class="mb-4">Randevu Oluştur</h1>
+                    <h1 class="mb-4">Randevu Olustur</h1>
                     <form method="post" action="/Default/MakeAppointment">
                         <div class="row g-3">
                             <div class="col-12 col-sm-6">
-                                <label>Bölüm Seçiniz</label>
-                                @Html.DropDownList("DepartmentId", (List<SelectListItem>)ViewBag.departments, "---Bölüm Seçiniz---", new { @class = "form-control" })
+                                <label class="form-label text-start d-block">Bolum Seciniz</label>
+                                @if (ViewBag.departments != null)
+                                {
+                                    @Html.DropDownList("DepartmentId",
+                                        (List<SelectListItem>)ViewBag.departments,
+                                        "--- Bolum Seciniz ---",
+                                        new { @class = "form-control", id = "DepartmentId" })
+                                }
+                                else
+                                {
+                                    <select class="form-control" id="DepartmentId" disabled>
+                                        <option>Bolum bulunamadi</option>
+                                    </select>
+                                }
                             </div>
                             <div class="col-12 col-sm-6">
-                                <label>Doktor Seçiniz</label>
-                                <select id="DoctorId" name="Doctorld" class="form-control bg-light border-0" style="height: 55px;">
-                                    <option selected>---Önce Bölümü Seçiniz---</option>
+                                <label class="form-label text-start d-block">Doktor Seciniz</label>
+                                <select id="DoctorId" name="Doctorld" class="form-control bg-light border-0" style="height:55px;">
+                                    <option value="">--- Once Bolumu Seciniz ---</option>
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="text" class="form-control bg-light border-0" name="FullName" placeholder="Adınız Soyadınız"
-                                       style="height: 55px;">
+                                <input type="text" class="form-control bg-light border-0"
+                                       name="FullName" placeholder="Adiniz Soyadiniz"
+                                       style="height:55px;" required>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="email" class="form-control bg-light border-0" name="Email" placeholder="Email Adresiniz"
-                                       style="height: 55px;">
+                                <input type="email" class="form-control bg-light border-0"
+                                       name="Email" placeholder="Email Adresiniz"
+                                       style="height:55px;" required>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="text" class="form-control bg-light border-0" name="PhoneNumber" placeholder="Telefon Numaranız"
-                                       style="height: 55px;">
+                                <input type="text" class="form-control bg-light border-0"
+                                       name="PhoneNumber" placeholder="Telefon Numaraniz"
+                                       style="height:55px;" required>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <div class="date" id="date" data-target-input="nearest">
-                                    @Html.DropDownList("AppointmentDate", (List<SelectListItem>)ViewBag.dateList, "---Tarih Seçin---", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="time" id="time" data-target-input="nearest">
-                                    <label>Saat Seçiniz</label>
-                                    <select id="AppointmentTime" name="AppointmentTime" class="form-control bg-light border-0" style="height: 55px;">
-                                        <option selected>---Önce Tarihi Seçiniz---</option>
+                                @if (ViewBag.dateList != null)
+                                {
+                                    @Html.DropDownList("AppointmentDate",
+                                        (List<SelectListItem>)ViewBag.dateList,
+                                        "--- Tarih Secin ---",
+                                        new { @class = "form-control", id = "AppointmentDate" })
+                                }
+                                else
+                                {
+                                    <select class="form-control" id="AppointmentDate" disabled>
+                                        <option>Tarih bulunamadi</option>
                                     </select>
-                                </div>
+                                }
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label class="form-label text-start d-block">Saat Seciniz</label>
+                                <select id="AppointmentTime" name="AppointmentTime"
+                                        class="form-control bg-light border-0" style="height:55px;">
+                                    <option value="">--- Once Tarih Secin ---</option>
+                                </select>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">
-                                    Randevu Oluştur
+                                    Randevu Olustur
                                 </button>
                             </div>
                         </div>
@@ -69,28 +92,18 @@
     </div>
 </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
 
         $("#DepartmentId").change(function () {
-
             var selectedDepId = $(this).val();
-
             var doctorDropdown = $("#DoctorId");
-
             var timeDropdown = $("#AppointmentTime");
 
+            doctorDropdown.html('<option value="">Yukleniyor...</option>');
+            timeDropdown.html('<option value="">--- Once Doktor Secin ---</option>');
 
-            $('#AppointmentDate').val('').trigger('change');
-
-            timeDropdown.empty();
-
-
-
-
-
+            if (!selectedDepId) return;
 
             $.ajax({
                 url: '/Default/GetDoctorsByDepartmentId',
@@ -98,30 +111,22 @@
                 data: { departmentId: selectedDepId },
                 dataType: 'json',
                 success: function (data) {
-                    doctorDropdown.empty();
-
-
+                    doctorDropdown.html('<option value="">--- Doktor Seciniz ---</option>');
                     $.each(data, function (i, doctor) {
-
-                        doctorDropdown.append($('<option> </option>').val(doctor.Value).html(doctor.Text));
+                        doctorDropdown.append($('<option>').val(doctor.Value).text(doctor.Text));
                     });
                 }
-            })
-
-        })
+            });
+        });
 
         $("#AppointmentDate").change(function () {
-
             var selectedDate = $(this).val();
-
             var selectedDoctorId = $("#DoctorId").val();
-
             var timeDropdown = $("#AppointmentTime");
 
-
-
-            if (selectedDate === '' && selectedDoctorId === '') {
-                timeDropdown.append('<option>---Önce Doktoru ve Tarihi Seçin</option>');
+            if (!selectedDate || !selectedDoctorId) {
+                timeDropdown.html('<option value="">--- Once Doktor ve Tarih Secin ---</option>');
+                return;
             }
 
             $.ajax({
@@ -130,43 +135,20 @@
                 dataType: 'json',
                 data: { selectedDate: selectedDate, doctorId: selectedDoctorId },
                 success: function (data) {
-
                     timeDropdown.empty();
-
-
-
                     $.each(data, function (i, item) {
-
-                        var isDisabled = false;
-                        var optionText = item.Time;
-
-                        if (item.IsBooked) {
-                            optionText += " (Dolu)";
-                            isDisabled = true;
-                        }
-
-                        var option = $('<option> </option>').val(item.Time).html(optionText);
-
-                        if (isDisabled) {
-                            option.prop('disabled', true);
-                        }
-
+                        var text = item.IsBooked ? item.Time + " (Dolu)" : item.Time;
+                        var option = $('<option>').val(item.Time).text(text);
+                        if (item.IsBooked) option.prop('disabled', true);
                         timeDropdown.append(option);
-                        timeDropdown.prop('disabled', false);
-
                     });
-
                 }
             });
-
         });
 
-
+        $("#DoctorId").change(function () {
+            var selectedDate = $("#AppointmentDate").val();
+            if (selectedDate) $("#AppointmentDate").trigger('change');
+        });
     });
-
-
-
-
 </script>
-
-
