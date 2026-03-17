@@ -1,0 +1,168 @@
+﻿@{
+}
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8f9ff 0%, #e8f0fe 100%);">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width:600px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Yapay Zeka Asistani</h5>
+            <h1 class="display-4">Size En Uygun Doktoru Bulakim</h1>
+            <p class="text-muted">Sikayetinizi veya hastaliginizi yazin, yapay zeka size uygun bolum ve doktoru onerecek.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Arama Formu -->
+                <div class="card shadow-lg border-0 rounded-lg">
+                    <div class="card-body p-4">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-white border-end-0" style="border-radius:12px 0 0 12px;">
+                                <i class="fas fa-stethoscope text-primary"></i>
+                            </span>
+                            <input type="text"
+                                   id="symptomInput"
+                                   class="form-control border-start-0 border-end-0"
+                                   placeholder="Ornek: Bas agrisi ve ates var, ya da kalp carpmasi hissediyorum..."
+                                   style="font-size:1rem;"
+                                   maxlength="200">
+                            <button class="btn btn-primary px-4" id="aiSearchBtn" type="button"
+                                    style="border-radius:0 12px 12px 0; min-width:130px;">
+                                <span id="btnText"><i class="fas fa-magic mr-2"></i>Analiz Et</span>
+                                <span id="btnSpinner" class="d-none">
+                                    <span class="spinner-border spinner-border-sm mr-2"></span>Yukleniyor...
+                                </span>
+                            </button>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Bu sistem bilgilendirme amaclidir, kesin tani yerine gecmez. Lutfen mutlaka doktorunuza basvurun.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hata mesaji -->
+                <div id="aiError" class="alert alert-danger mt-3 d-none" role="alert">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span id="aiErrorText"></span>
+                </div>
+
+                <!-- Sonuc Karti -->
+                <div id="aiResult" class="d-none mt-4">
+                    <div class="card shadow border-0" style="border-radius:16px; overflow:hidden;">
+                        <div class="card-header py-3" style="background: linear-gradient(135deg, #1d2a77 0%, #2a3fa0 100%);">
+                            <div class="d-flex align-items-center">
+                                <div style="width:42px;height:42px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;" class="mr-3">
+                                    <i class="fas fa-robot text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 text-white font-weight-bold">Yapay Zeka Analiz Sonucu</h6>
+                                    <small style="color:rgba(255,255,255,0.7);">Belirttiginiz semptomlara gore oneri</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+
+                            <!-- Tavsiye -->
+                            <div class="mb-4 p-3 rounded" style="background:#f0f4ff; border-left: 4px solid #1d2a77;">
+                                <h6 class="text-primary mb-2"><i class="fas fa-heartbeat mr-2"></i>Saglik Tavsiyesi</h6>
+                                <p class="mb-0 text-dark" id="resultTavsiye" style="line-height:1.7;"></p>
+                            </div>
+
+                            <!-- Bolum ve Doktor -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded text-center" style="background:#e8f5e9; border:1px solid #c8e6c9;">
+                                        <i class="fas fa-briefcase-medical fa-2x mb-2" style="color:#1a6b3c;"></i>
+                                        <div style="font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing:1px;">Onerilen Bolum</div>
+                                        <div class="font-weight-bold mt-1" id="resultBolum" style="color:#1a6b3c; font-size:1.1rem;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded text-center" style="background:#e3f2fd; border:1px solid #bbdefb;">
+                                        <i class="fas fa-user-md fa-2x mb-2" style="color:#1a3a6b;"></i>
+                                        <div style="font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing:1px;">Onerilen Doktor</div>
+                                        <div class="font-weight-bold mt-1" id="resultDoktor" style="color:#1a3a6b; font-size:1.1rem;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Aciklama -->
+                            <div class="p-3 rounded mb-4" style="background:#fff8e1; border-left:4px solid #ffc107;">
+                                <h6 style="color:#856404;" class="mb-2"><i class="fas fa-lightbulb mr-2"></i>Neden Bu Oneri?</h6>
+                                <p class="mb-0" id="resultAciklama" style="color:#533f03; line-height:1.7;"></p>
+                            </div>
+
+                            <!-- Randevu Al Butonu -->
+                            <div class="text-center">
+                                <a href="#appointment" class="btn btn-primary btn-lg px-5 rounded-pill">
+                                    <i class="fas fa-calendar-check mr-2"></i>Hemen Randevu Al
+                                </a>
+                                <p class="text-muted mt-2 mb-0" style="font-size:0.8rem;">
+                                    <i class="fas fa-shield-alt mr-1"></i>
+                                    Bu oneri yalnizca bilgilendirme amaclidir.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        function runSearch() {
+            var symptom = $("#symptomInput").val().trim();
+            if (!symptom) {
+                $("#symptomInput").focus();
+                return;
+            }
+
+            // UI: loading
+            $("#btnText").addClass("d-none");
+            $("#btnSpinner").removeClass("d-none");
+            $("#aiSearchBtn").prop("disabled", true);
+            $("#aiResult").addClass("d-none");
+            $("#aiError").addClass("d-none");
+
+            $.ajax({
+                url: "/Default/GetAIRecommendation",
+                type: "POST",
+                data: { symptom: symptom },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        $("#resultTavsiye").text(data.tavsiye);
+                        $("#resultBolum").text(data.bolum);
+                        $("#resultDoktor").text(data.doktor);
+                        $("#resultAciklama").text(data.aciklama);
+                        $("#aiResult").removeClass("d-none");
+                        // Smooth scroll
+                        $("html, body").animate({ scrollTop: $("#aiResult").offset().top - 80 }, 600);
+                    } else {
+                        $("#aiErrorText").text(data.message);
+                        $("#aiError").removeClass("d-none");
+                    }
+                },
+                error: function () {
+                    $("#aiErrorText").text("Sunucuya ulasilamadi. Lutfen internet baglantinizi kontrol edin.");
+                    $("#aiError").removeClass("d-none");
+                },
+                complete: function () {
+                    $("#btnText").removeClass("d-none");
+                    $("#btnSpinner").addClass("d-none");
+                    $("#aiSearchBtn").prop("disabled", false);
+                }
+            });
+        }
+
+        $("#aiSearchBtn").click(runSearch);
+
+        $("#symptomInput").keypress(function (e) {
+            if (e.which === 13) runSearch();
+        });
+    });
+</script>
